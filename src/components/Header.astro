@@ -1,17 +1,86 @@
-<div class="mx-16 my-8 lg:mx-64 lg:my-16 content-spacing container-custom flex items-center justify-between px-4 sm:px-6">
-	<a href="/" aria-label="Go to homepage">
-	<img id="Logo"
-       src="/Logo.svg" 
-       alt="Logo Jardins do Pontal" 
-       class=" cursor-pointer transition-transform duration-300 hover:scale-105"
-       width="170"
-       height="128">
-	</a>
-	<nav class="hidden md:flex items-center space-x-12 lg:space-x-16">
-	<a href="/" class="h2 animated-underline duration-200">Localização</a>
-	<a href="/" class="h2 animated-underline duration-200">Sobre nós</a>
-	<a href="/" class="h2 animated-underline duration-200">Espaços de Lazer</a>
-	<a href="/" class="h2 animated-underline duration-200">Galeria</a>
-	</nav>
+<div class="mx-4 my-4 sm:mx-8 sm:my-6 lg:mx-64 lg:my-16 content-spacing container-custom flex items-center justify-between px-4 sm:px-6">
+  <a href="/" aria-label="Ir para a página inicial">
+    <img
+      id="Logo"
+      src="/Logo.svg"
+      alt="Logo Jardins do Pontal"
+      class="cursor-pointer transition-transform duration-300 hover:scale-105 w-[120px] h-[90px] sm:w-[140px] sm:h-[105px] lg:w-[170px] lg:h-[128px]"
+    >
+  </a>
 
+  <nav class="hidden md:flex items-center space-x-12 lg:space-x-16" aria-label="Menu principal">
+    <a href="#localizacao" class="h2 animated-underline duration-200">Localização</a>
+    <a href="#sobre" class="h2 animated-underline duration-200">Sobre nós</a>
+    <a href="#espacos" class="h2 animated-underline duration-200">Espaços de Lazer</a>
+    <a href="#galeria" class="h2 animated-underline duration-200">Galeria</a>
+  </nav>
+
+  <button
+    id="mobileMenuBtn"
+    class="md:hidden relative flex flex-col items-center justify-center w-10 h-10 space-y-1 focus:outline-none z-50"
+    aria-label="Abrir menu"
+    aria-controls="mobileMenu"
+    aria-expanded="false"
+    aria-haspopup="true"
+  >
+    <span id="line1" class="block w-6 h-0.5 bg-gray-800 transition-all duration-300 ease-in-out"></span>
+    <span id="line2" class="block w-6 h-0.5 bg-gray-800 transition-all duration-300 ease-in-out"></span>
+    <span id="line3" class="block w-6 h-0.5 bg-gray-800 transition-all duration-300 ease-in-out"></span>
+  </button>
 </div>
+
+<div
+  id="mobileMenu"
+  class="md:hidden fixed inset-0 z-40 transform translate-x-full transition-transform duration-300 ease-in-out will-change-transform"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Menu móvel"
+  tabindex="-1"
+>
+  <div class="absolute inset-0 bg-white"></div>
+
+  <div class="relative flex flex-col h-full">
+    <div class="flex items-center justify-between p-6 border-b border-gray-200">
+      <img
+        src="/Logo.svg"
+        alt="Logo Jardins do Pontal"
+        class="w-20 h-15"
+      >
+      <button
+        id="closeMobileMenu"
+        class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-gray-800 focus:outline-none"
+        aria-label="Fechar menu"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="flex-1 px-6 py-8" aria-label="Menu mobile">
+      <div class="space-y-4">
+        <a href="#localizacao" class="mobile-menu-link block text-xl font-medium py-4 text-gray-800 hover:text-blue-600 transition-colors duration-200 border-b border-gray-100">
+          Localização
+        </a>
+        <a href="#sobre" class="mobile-menu-link block text-xl font-medium py-4 text-gray-800 hover:text-blue-600 transition-colors duration-200 border-b border-gray-100">
+          Sobre nós
+        </a>
+        <a href="#espacos" class="mobile-menu-link block text-xl font-medium py-4 text-gray-800 hover:text-blue-600 transition-colors duration-200 border-b border-gray-100">
+          Espaços de Lazer
+        </a>
+        <a href="#galeria" class="mobile-menu-link block text-xl font-medium py-4 text-gray-800 hover:text-blue-600 transition-colors duration-200 border-b border-gray-100">
+          Galeria
+        </a>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<div
+  id="mobileOverlay"
+  class="md:hidden fixed inset-0 bg-black bg-opacity-50 z-30 opacity-0 pointer-events-none transition-opacity duration-300"
+  aria-hidden="true"
+></div>
+
+
