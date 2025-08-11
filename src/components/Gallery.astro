@@ -1,0 +1,340 @@
+---
+const images = [
+    '/Render Jardins do Pontal (1).png',
+    '/Render Jardins do Pontal (2).png',
+    '/Render Jardins do Pontal (3).png',
+    '/Render Jardins do Pontal (4).png',
+    '/Render Jardins do Pontal (5).png',
+    '/Render Jardins do Pontal (6).png',
+    '/Render Jardins do Pontal (7).png',
+    '/Render Jardins do Pontal (8).png',
+    '/Render Jardins do Pontal (9).png',
+    '/Render Jardins do Pontal (10).png',
+    '/Render Jardins do Pontal (11).png',
+    '/Render Jardins do Pontal (12).png',
+    '/Render Jardins do Pontal (13).png',
+    '/Render Jardins do Pontal (14).png',
+    '/Render Jardins do Pontal (15).png',
+    '/Render Jardins do Pontal (16).png',
+    '/Render Jardins do Pontal (17).png',
+    '/Render Jardins do Pontal (18).png',
+    '/Render Jardins do Pontal (19).png',
+    '/Render Jardins do Pontal (20).png',
+    '/Render Jardins do Pontal (21).png',
+    '/Render Jardins do Pontal (22).png',
+    '/Render Jardins do Pontal (23).png',
+    '/Render Jardins do Pontal (24).png',
+    '/Render Jardins do Pontal (25).png',
+    '/Render Jardins do Pontal (26).png',
+    '/Render Jardins do Pontal (27).png',
+    '/Render Jardins do Pontal (28).png',
+    '/Render Jardins do Pontal (29).png',
+    '/Render Jardins do Pontal (30).png',
+    '/Render Jardins do Pontal (31).png',
+    '/Render Jardins do Pontal (32).png'
+];
+---
+
+<section class="container-spacing">
+    <h1 class='mb-8'>Galeria</h1>
+    <div class="relative">
+        <button id="prevBtn" class="absolute cursor-pointer left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-50 transition-colors">
+            <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+        </button>
+        
+        <div id="gallery" class="overflow-hidden mx-12">
+            <div id="galleryTrack" class="flex gap-4 transition-transform duration-300 ease-in-out">
+                {images.slice(0, 6).map((src, index) => (
+                    <img 
+                        src={src} 
+                        alt={`Render Jardins do Pontal ${index + 1}`} 
+                        class="w-80 h-60 object-cover rounded-lg flex-shrink-0 cursor-pointer hover:opacity-90 transition-opacity"
+                        data-modal-src={src}
+                    >
+                ))}
+                
+                {images.slice(6).map((src, index) => (
+                    <div data-src={src} class="w-80 h-60 bg-gray-200 rounded-lg flex-shrink-0 flex items-center justify-center">
+                        <div class="animate-pulse bg-gray-300 w-full h-full rounded-lg"></div>
+                    </div>
+                ))}
+            </div>
+        </div>
+        
+        <button id="nextBtn" class="absolute cursor-pointer right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-50 transition-colors">
+            <img src="/src/Icons/lucide/chevron-right.svg" alt="próximo" class="w-6 h-6 brightness-0">
+        </button>
+    </div>
+</section>
+
+<!-- Modal para imagem expandida -->
+<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center p-4">
+    <div class="relative max-w-7xl max-h-full">
+        <!-- Botão fechar -->
+        <button id="closeModal" class="absolute -top-4 -right-4 bg-white rounded-full p-2 shadow-lg hover:bg-gray-50 transition-colors z-10">
+            <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        
+        <!-- Imagem expandida -->
+        <img id="modalImage" src="" alt="" class="max-w-full max-h-full object-contain rounded-lg">
+        
+        <!-- Navegação no modal -->
+        <button id="modalPrev" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white rounded-full p-3 shadow-lg hover:bg-gray-50 transition-colors">
+            <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+        </button>
+        
+        <button id="modalNext" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white rounded-full p-3 shadow-lg hover:bg-gray-50 transition-colors">
+            <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </button>
+        
+        <!-- Contador de imagens -->
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
+            <span id="imageCounter">1 / 32</span>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const galleryTrack = document.getElementById('galleryTrack') as HTMLElement | null;
+    const prevBtn = document.getElementById('prevBtn') as HTMLButtonElement | null;
+    const nextBtn = document.getElementById('nextBtn') as HTMLButtonElement | null;
+    const gallery = document.getElementById('gallery') as HTMLElement | null;
+    
+    const imageModal = document.getElementById('imageModal') as HTMLElement | null;
+    const modalImage = document.getElementById('modalImage') as HTMLImageElement | null;
+    const closeModal = document.getElementById('closeModal') as HTMLButtonElement | null;
+    const modalPrev = document.getElementById('modalPrev') as HTMLButtonElement | null;
+    const modalNext = document.getElementById('modalNext') as HTMLButtonElement | null;
+    const imageCounter = document.getElementById('imageCounter') as HTMLElement | null;
+    
+    if (!galleryTrack || !prevBtn || !nextBtn || !gallery || !imageModal || !modalImage || !closeModal || !modalPrev || !modalNext || !imageCounter) {
+        console.error('Elementos da galeria não encontrados');
+        return;
+    }
+    
+    let currentIndex = 0;
+    let currentModalIndex = 0;
+    const imageWidth = 320;
+    const gap = 16;
+    const slideWidth = imageWidth + gap;
+    
+    const allImages = [
+        '/Render Jardins do Pontal (1).png',
+        '/Render Jardins do Pontal (2).png',
+        '/Render Jardins do Pontal (3).png',
+        '/Render Jardins do Pontal (4).png',
+        '/Render Jardins do Pontal (5).png',
+        '/Render Jardins do Pontal (6).png',
+        '/Render Jardins do Pontal (7).png',
+        '/Render Jardins do Pontal (8).png',
+        '/Render Jardins do Pontal (9).png',
+        '/Render Jardins do Pontal (10).png',
+        '/Render Jardins do Pontal (11).png',
+        '/Render Jardins do Pontal (12).png',
+        '/Render Jardins do Pontal (13).png',
+        '/Render Jardins do Pontal (14).png',
+        '/Render Jardins do Pontal (15).png',
+        '/Render Jardins do Pontal (16).png',
+        '/Render Jardins do Pontal (17).png',
+        '/Render Jardins do Pontal (18).png',
+        '/Render Jardins do Pontal (19).png',
+        '/Render Jardins do Pontal (20).png',
+        '/Render Jardins do Pontal (21).png',
+        '/Render Jardins do Pontal (22).png',
+        '/Render Jardins do Pontal (23).png',
+        '/Render Jardins do Pontal (24).png',
+        '/Render Jardins do Pontal (25).png',
+        '/Render Jardins do Pontal (26).png',
+        '/Render Jardins do Pontal (27).png',
+        '/Render Jardins do Pontal (28).png',
+        '/Render Jardins do Pontal (29).png',
+        '/Render Jardins do Pontal (30).png',
+        '/Render Jardins do Pontal (31).png',
+        '/Render Jardins do Pontal (32).png'
+    ];
+    
+    function getGalleryValues() {
+        if (!gallery || !galleryTrack) return { containerWidth: 0, visibleImages: 0, totalImages: 0, maxIndex: 0 };
+        
+        const containerWidth = gallery.offsetWidth;
+        const visibleImages = Math.floor(containerWidth / slideWidth);
+        const totalImages = galleryTrack.children.length;
+        const maxIndex = Math.max(0, totalImages - visibleImages);
+        
+        return { containerWidth, visibleImages, totalImages, maxIndex };
+    }
+    
+    function loadImage(placeholder: Element) {
+        const imgSrc = placeholder.getAttribute('data-src');
+        if (imgSrc && placeholder.parentNode) {
+            const img = document.createElement('img');
+            img.src = imgSrc;
+            img.alt = `Render Jardins do Pontal`;
+            img.className = 'w-80 h-60 object-cover rounded-lg flex-shrink-0 cursor-pointer hover:opacity-90 transition-opacity';
+            img.setAttribute('data-modal-src', imgSrc);
+            
+            img.addEventListener('click', () => openModal(imgSrc));
+            
+            img.onload = function() {
+                if (placeholder.parentNode) {
+                    placeholder.parentNode.replaceChild(img, placeholder);
+                }
+            };
+        }
+    }
+    
+    function loadNearbyImages() {
+        if (!galleryTrack) return;
+        
+        const { visibleImages } = getGalleryValues();
+        const startIndex = Math.max(0, currentIndex - 1);
+        const endIndex = Math.min(galleryTrack.children.length - 1, currentIndex + visibleImages + 1);
+        
+        for (let i = startIndex; i <= endIndex; i++) {
+            const element = galleryTrack.children[i];
+            if (element && element.hasAttribute('data-src')) {
+                loadImage(element);
+            }
+        }
+    }
+    
+    function updateGallery() {
+        if (!galleryTrack || !prevBtn || !nextBtn) return;
+        
+        const { maxIndex } = getGalleryValues();
+        
+        const translateX = currentIndex * slideWidth;
+        galleryTrack.style.transform = `translateX(-${translateX}px)`;
+        
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex >= maxIndex;
+        
+        if (prevBtn.disabled) {
+            prevBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        } else {
+            prevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+        
+        if (nextBtn.disabled) {
+            nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        } else {
+            nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+        
+        loadNearbyImages();
+    }
+    
+ 
+    function openModal(imageSrc: string) {
+        if (!imageModal || !modalImage || !imageCounter) return;
+        
+        currentModalIndex = allImages.findIndex(img => img === imageSrc);
+        if (currentModalIndex === -1) currentModalIndex = 0;
+        
+        updateModalImage();
+        imageModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; 
+    }
+    
+    function closeModalFunc() {
+        if (!imageModal) return;
+        
+        imageModal.classList.add('hidden');
+        document.body.style.overflow = 'auto'; 
+    }
+    
+    function updateModalImage() {
+        if (!modalImage || !imageCounter || !modalPrev || !modalNext) return;
+        
+        modalImage.src = allImages[currentModalIndex];
+        modalImage.alt = `Render Jardins do Pontal ${currentModalIndex + 1}`;
+        imageCounter.textContent = `${currentModalIndex + 1} / ${allImages.length}`;
+        
+        modalPrev.style.display = currentModalIndex === 0 ? 'none' : 'block';
+        modalNext.style.display = currentModalIndex === allImages.length - 1 ? 'none' : 'block';
+    }
+    
+    function prevModalImage() {
+        if (currentModalIndex > 0) {
+            currentModalIndex--;
+            updateModalImage();
+        }
+    }
+    
+    function nextModalImage() {
+        if (currentModalIndex < allImages.length - 1) {
+            currentModalIndex++;
+            updateModalImage();
+        }
+    }
+    
+    prevBtn.addEventListener('click', () => {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateGallery();
+        }
+    });
+    
+    nextBtn.addEventListener('click', () => {
+        const { maxIndex } = getGalleryValues();
+        if (currentIndex < maxIndex) {
+            currentIndex++;
+            updateGallery();
+        }
+    });
+    
+    closeModal.addEventListener('click', closeModalFunc);
+    modalPrev.addEventListener('click', prevModalImage);
+    modalNext.addEventListener('click', nextModalImage);
+    
+    imageModal.addEventListener('click', (e) => {
+        if (e.target === imageModal) {
+            closeModalFunc();
+        }
+    });
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && imageModal && !imageModal.classList.contains('hidden')) {
+            closeModalFunc();
+        }
+        
+        if (imageModal && !imageModal.classList.contains('hidden')) {
+            if (e.key === 'ArrowLeft') {
+                prevModalImage();
+            } else if (e.key === 'ArrowRight') {
+                nextModalImage();
+            }
+        }
+    });
+    
+    if (galleryTrack) {
+        galleryTrack.querySelectorAll('img[data-modal-src]').forEach(img => {
+            img.addEventListener('click', () => {
+                const src = img.getAttribute('data-modal-src');
+                if (src) openModal(src);
+            });
+        });
+    }
+    
+    updateGallery();
+    
+    window.addEventListener('resize', () => {
+        const { maxIndex } = getGalleryValues();
+        
+        if (currentIndex > maxIndex) {
+            currentIndex = maxIndex;
+        }
+        
+        updateGallery();
+    });
+});
+</script>

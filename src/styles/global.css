@@ -35,7 +35,7 @@
 
 @layer components {
   .container-spacing {
-    @apply mx-16 my-8 lg:mx-64 lg:my-16;
+    @apply mx-16 my-8 lg:mx-64 lg:my-64;
   }
    .animated-underline {
     text-decoration: none;
