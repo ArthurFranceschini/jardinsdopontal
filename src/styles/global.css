@@ -15,7 +15,7 @@
          font-family: 'Inter', sans-serif;
     }
 
-    .h1 {
+    h1 {
     @apply text-[32px] lg:text-[64px] leading-[100%] font-medium;
   }
   
@@ -35,7 +35,7 @@
 
 @layer components {
   .container-spacing {
-    @apply mx-16 my-4 lg:mx-64 lg:my-8;
+    @apply mx-16 my-8 lg:mx-64 lg:my-16;
   }
    .animated-underline {
     text-decoration: none;
@@ -62,4 +62,4 @@
 }
 
 @utility btn {
- @apply inline-flex items-center justify-center gap-2 md:gap-4 px-4 py-2 md:px-6 md:py-3 font-normal rounded-lg bg-black text-white stroke-white stroke-4;}
+ @apply cursor-pointer inline-flex items-center justify-center gap-2 md:gap-4 px-4 py-2 md:px-6 md:py-3 font-normal rounded-lg bg-black text-white stroke-white border-white border-4;}
