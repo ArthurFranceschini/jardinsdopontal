@@ -63,3 +63,27 @@
 
 @utility btn {
  @apply cursor-pointer inline-flex items-center justify-center gap-2 md:gap-4 px-4 py-2 md:px-6 md:py-3 font-normal rounded-lg bg-black text-white stroke-white border-white border-4;}
+ 
+ html {
+    scroll-behavior: smooth;
+}
+
+.animated-underline-gradient {
+    position: relative;
+    text-decoration: none;
+}
+
+.animated-underline-gradient::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background: linear-gradient(45deg, #CFFF04, #FE3CAC, #0477BF);
+    transition: width 0.2s ease-in-out;
+}
+
+.animated-underline-gradient:hover::after {
+    width: 100%;
+}
