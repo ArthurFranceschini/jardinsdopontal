@@ -64,7 +64,7 @@
         </a>
         <a href="#AboutUs" class="mobile-menu-link block text-xl font-medium py-4 text-gray-800 hover:text-blue-600 transition-colors duration-200 border-b border-gray-100">
           Sobre nós
-        </a>s
+        </a>
         <a href="#Gallery" class="mobile-menu-link block text-xl font-medium py-4 text-gray-800 hover:text-blue-600 transition-colors duration-200 border-b border-gray-100">
           Galeria
         </a>
@@ -80,3 +80,92 @@
 ></div>
 
 
+   <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeMobileMenuBtn = document.getElementById('closeMobileMenu');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+    const menuLinks = document.querySelectorAll('.mobile-menu-link');
+    const line1 = document.getElementById('line1');
+    const line2 = document.getElementById('line2');
+    const line3 = document.getElementById('line3');
+
+    if (!mobileMenuBtn || !mobileMenu || !mobileOverlay) {
+        console.error('Elementos essenciais do menu mobile não encontrados!');
+        return;
+    }
+
+    const openMenu = () => {
+        mobileMenu.classList.remove('translate-x-full');
+        mobileMenu.classList.add('translate-x-0');
+        mobileOverlay.classList.remove('opacity-0', 'pointer-events-none');
+        mobileOverlay.classList.add('opacity-100', 'pointer-events-auto');
+        mobileMenuBtn.setAttribute('aria-expanded', 'true');
+
+        mobileMenuBtn.classList.add('opacity-0', 'pointer-events-none');
+
+        if (line1 && line2 && line3) {
+            line1.classList.add('rotate-45', 'translate-y-2', 'origin-center');
+            line2.classList.add('opacity-0');
+            line3.classList.add('-rotate-45', '-translate-y-2', 'origin-center');
+        }
+    };
+
+    const closeMenu = () => {
+        mobileMenu.classList.remove('translate-x-0');
+        mobileMenu.classList.add('translate-x-full');
+        mobileOverlay.classList.remove('opacity-100', 'pointer-events-auto');
+        mobileOverlay.classList.add('opacity-0', 'pointer-events-none');
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+
+        mobileMenuBtn.classList.remove('opacity-0', 'pointer-events-none');
+
+        if (line1 && line2 && line3) {
+            line1.classList.remove('rotate-45', 'translate-y-2', 'origin-center');
+            line2.classList.remove('opacity-0');
+            line3.classList.remove('-rotate-45', '-translate-y-2', 'origin-center');
+        }
+    };
+
+    mobileMenuBtn.addEventListener('click', openMenu);
+
+    if (closeMobileMenuBtn) {
+        closeMobileMenuBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeMenu();
+        });
+        
+        const svgIcon = closeMobileMenuBtn.querySelector('svg');
+        if (svgIcon) {
+            svgIcon.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                closeMenu();
+            });
+        }
+    }
+
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target instanceof Element) {
+            const closestButton = e.target.closest('#closeMobileMenu');
+            if (closestButton) {
+                e.preventDefault();
+                e.stopPropagation();
+                closeMenu();
+            }
+        }
+    });
+
+    mobileOverlay.addEventListener('click', closeMenu);
+
+    if (menuLinks.length > 0) {
+        menuLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+    }
+});
+</script>
+</body>
+</html>
